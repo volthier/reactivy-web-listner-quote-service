@@ -1,0 +1,26 @@
+version: '2'
+services:
+
+  db:
+    build: ./docker/mongo/
+
+    container_name: mongodb
+    expose:
+      - "27017"
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./:/var/www/projetos/db
+
+
+  app:
+    build: ./docker/app/
+
+    container_name: quote-stock-service
+
+    ports:
+      - "80:8080"
+    links:
+      - "db"
+    volumes:
+      - ./:/tmp
